@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-sign-in',
@@ -15,7 +16,8 @@ export class SignInComponent implements OnInit {
     constructor(
         private formBuilder: FormBuilder,
         private authService: AuthService,
-        private snackBar: MatSnackBar
+        private snackBar: MatSnackBar,
+        private router: Router
     ) {}
 
     public async login() {
@@ -23,17 +25,23 @@ export class SignInComponent implements OnInit {
             return;
         }
         this.showSpinner = true;
-        try {
-            const auth = await this.authService.signIn(this.loginForm.value);
-            console.log(auth);
-        } catch (err) {
-            this.showMessage('Invalid Email/Password combination.');
+
+        const auth: any = await this.authService
+            .signIn(this.loginForm.value)
+            .catch(err => {
+                this.showInavlidEmailPassMessage();
+            });
+        if (auth && auth.success) {
+            this.authService.toggleLoggedIn(true);
+            sessionStorage.setItem('token', auth.token);
+            this.router.navigateByUrl('encoder/encode');
+            return;
         }
         this.showSpinner = false;
     }
 
-    showMessage(message: string) {
-        this.snackBar.open(message, 'Ok', {
+    public showInavlidEmailPassMessage() {
+        this.snackBar.open('Invalid Email/Password combination.', 'Ok', {
             duration: 5000
         });
     }

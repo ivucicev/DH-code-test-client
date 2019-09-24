@@ -3,8 +3,11 @@
         DH simple encoder
     </span>
     <span class="nav-tool-items">
-        <a mat-button routerLink="auth/sign-in" routerLinkActive="active">Login</a>
-        <a mat-button routerLink="auth/sign-up" routerLinkActive="active">Register</a>
+        <ng-container *ngIf="!(isLoggedIn | async)">
+            <a mat-button routerLink="auth/sign-in" routerLinkActive="active">Login</a>
+            <a mat-button routerLink="auth/sign-up" routerLinkActive="active">Register</a>
+        </ng-container>
+        <button mat-button (click)="signOut()" *ngIf="isLoggedIn | async">Logout</button>
     </span>
 </mat-toolbar>
 <router-outlet></router-outlet>

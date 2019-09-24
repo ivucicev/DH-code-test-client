@@ -33,31 +33,39 @@ export class HttpInterceptorService implements HttpInterceptor {
         | HttpUserEvent<any>
         | any
     > {
-        return next.handle(this.addTokenToRequest(request, '')).pipe(
-            catchError(err => {
-                if (err instanceof HttpErrorResponse) {
-                    switch ((err as HttpErrorResponse).status) {
-                        case 401:
-                            this.snackBar.open('Not authenticated...', 'Ok', {
-                                duration: 2000
-                            });
-                            this.router.navigateByUrl('/auth/sign-in');
-                            return throwError(err);
-                        case 400:
-                            return throwError(err);
-                    }
-                } else {
-                    this.snackBar.open(
-                        'Something went wrong! Please try again...',
-                        'Ok',
-                        {
-                            duration: 2000
+        return next
+            .handle(
+                this.addTokenToRequest(request, sessionStorage.getItem('token'))
+            )
+            .pipe(
+                catchError(err => {
+                    if (err instanceof HttpErrorResponse) {
+                        switch ((err as HttpErrorResponse).status) {
+                            case 401:
+                                this.snackBar.open(
+                                    'Not authenticated...',
+                                    'Ok',
+                                    {
+                                        duration: 2000
+                                    }
+                                );
+                                this.router.navigateByUrl('/auth/sign-in');
+                                return throwError(err);
+                            case 400:
+                                return throwError(err);
                         }
-                    );
-                    return throwError(err);
-                }
-            })
-        );
+                    } else {
+                        this.snackBar.open(
+                            'Something went wrong! Please try again...',
+                            'Ok',
+                            {
+                                duration: 2000
+                            }
+                        );
+                        return throwError(err);
+                    }
+                })
+            );
     }
 
     private addTokenToRequest(
