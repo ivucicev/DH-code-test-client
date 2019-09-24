@@ -21,17 +21,24 @@ export class SignUpComponent implements OnInit {
     ) {}
 
     public async register() {
-        if (!this.registerForm.valid) {
+        if (
+            !this.registerForm.valid ||
+            this.registerForm.value.password !==
+                this.registerForm.value.passwordRepeat
+        ) {
             return;
         }
+        this.showSpinner = true;
         const register: any = await this.authService
             .signUp(this.registerForm.value)
             .catch(err => {
-                this.showMessage(err.message);
+                this.showMessage(err.error.err);
             });
         if (register && register.success) {
             this.router.navigateByUrl('auth/sign-in');
+            this.showMessage('Success! You can log in to your account.');
         }
+        this.showSpinner = false;
     }
 
     public showMessage(message) {
@@ -53,6 +60,10 @@ export class SignUpComponent implements OnInit {
                 ]
             ],
             password: [
+                '',
+                [Validators.required, Validators.pattern(/^(?=.*\d).{6,}$/)]
+            ],
+            passwordRepeat: [
                 '',
                 [Validators.required, Validators.pattern(/^(?=.*\d).{6,}$/)]
             ]

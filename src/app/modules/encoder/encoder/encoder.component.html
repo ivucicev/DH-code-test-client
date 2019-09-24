@@ -1,1 +1,25 @@
-<p>encoder works!</p>
+<div class="container">
+    <mat-card class="card">
+        <mat-card-header>
+            <mat-card-title>
+                Encoder
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <form (ngSubmit)="encode()">
+                <div class="container">
+                    <mat-form-field>
+                        <input matInput placeholder="Enter Sequence" [(ngModel)]="sequence" name="sequence" required>
+                    </mat-form-field>
+                </div>
+                <mat-card-actions>
+                    <mat-spinner [diameter]="25" *ngIf="showSpinner">
+                    </mat-spinner>
+                    <button *ngIf="!showSpinner" mat-raised-button type="submit" color="primary"
+                        [disabled]="!sequence">Encode
+                    </button>
+                </mat-card-actions>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

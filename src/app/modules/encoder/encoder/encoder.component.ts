@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { EncodeService } from 'src/app/core/services/encode.service';
 
 @Component({
-  selector: 'app-encoder',
-  templateUrl: './encoder.component.html',
-  styleUrls: ['./encoder.component.scss']
+    selector: 'app-encoder',
+    templateUrl: './encoder.component.html',
+    styleUrls: ['./encoder.component.scss']
 })
 export class EncoderComponent implements OnInit {
+    public sequence;
 
-  constructor() { }
+    constructor(private encoderService: EncodeService) {}
 
-  ngOnInit() {
-  }
+    public encode() {}
 
+    ngOnInit() {}
 }

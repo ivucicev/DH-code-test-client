@@ -29,7 +29,7 @@ export class SignInComponent implements OnInit {
         const auth: any = await this.authService
             .signIn(this.loginForm.value)
             .catch(err => {
-                this.showInavlidEmailPassMessage();
+                this.showMessage(err.error.err);
             });
         if (auth && auth.success) {
             this.authService.toggleLoggedIn(true);
@@ -40,8 +40,8 @@ export class SignInComponent implements OnInit {
         this.showSpinner = false;
     }
 
-    public showInavlidEmailPassMessage() {
-        this.snackBar.open('Invalid Email/Password combination.', 'Ok', {
+    public showMessage(message) {
+        this.snackBar.open(message, 'Ok', {
             duration: 5000
         });
     }

@@ -18,12 +18,16 @@
                         <input matInput placeholder="Password" formControlName="password" type="password"
                             name="password" required>
                     </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Password repeat" formControlName="passwordRepeat" type="password"
+                            name="passwordRepeat" required>
+                    </mat-form-field>
                 </div>
                 <mat-card-actions>
                     <mat-spinner [diameter]="25" *ngIf="showSpinner">
                     </mat-spinner>
                     <button *ngIf="!showSpinner" mat-raised-button type="submit" color="primary"
-                        [disabled]="!registerForm.valid">Login
+                        [disabled]="!registerForm.valid || this.registerForm.value.password !== this.registerForm.value.passwordRepeat">Register
                     </button>
                 </mat-card-actions>
             </form>
