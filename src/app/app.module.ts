@@ -3,9 +3,14 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { Routes } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 
 const appRoutes: Routes = [
+    {
+        path: '',
+        redirectTo: 'auth',
+        pathMatch: 'full'
+    },
     {
         path: 'auth',
         loadChildren: './modules/auth/auth.module#AuthModule'
@@ -22,7 +27,7 @@ const appRoutes: Routes = [
 
 @NgModule({
     declarations: [AppComponent],
-    imports: [BrowserModule, AppRoutingModule],
+    imports: [BrowserModule, AppRoutingModule, RouterModule.forRoot(appRoutes)],
     providers: [],
     bootstrap: [AppComponent]
 })
