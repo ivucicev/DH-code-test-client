@@ -3,7 +3,7 @@ import { AuthService } from './core/services/auth.service';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from './store/app.states';
-import { LogOut } from './store/actions/auth.actions';
+import { LogOut, LogInSuccess } from './store/actions/auth.actions';
 
 @Component({
     selector: 'app-root',
@@ -12,7 +12,7 @@ import { LogOut } from './store/actions/auth.actions';
 })
 export class AppComponent implements OnInit {
     public title = 'DH-code-test-client';
-    public isLoggedIn;
+    public state$;
 
     constructor(
         private authService: AuthService,
@@ -28,15 +28,18 @@ export class AppComponent implements OnInit {
 
     public checkSession() {
         if (this.authService.checkSession()) {
-            this.authService.toggleLoggedIn(false);
-            this.router.navigateByUrl('/auth/sign-in');
+            this.store.dispatch(new LogOut());
         } else {
-            this.authService.toggleLoggedIn(true);
-            this.router.navigateByUrl('/encoder/encode');
+            this.store.dispatch(
+                new LogInSuccess({
+                    email: sessionStorage.getItem('email'),
+                    token: sessionStorage.getItem('token')
+                })
+            );
         }
     }
 
     ngOnInit() {
-        this.isLoggedIn = this.authService.isLoggedIn$;
+        this.state$ = this.store;
     }
 }

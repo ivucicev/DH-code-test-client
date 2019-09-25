@@ -3,11 +3,14 @@
         DH simple encoder
     </span>
     <span class="nav-tool-items">
-        <ng-container *ngIf="!(isLoggedIn | async)">
+        <ng-container *ngIf="!(state$ | async)?.auth?.isAuthenticated">
             <a mat-button routerLink="auth/sign-in" routerLinkActive="active">Login</a>
             <a mat-button routerLink="auth/sign-up" routerLinkActive="active">Register</a>
         </ng-container>
-        <button mat-button (click)="signOut()" *ngIf="isLoggedIn | async">Logout</button>
+        <ng-container *ngIf="(state$ | async)?.auth?.isAuthenticated">
+            <button mat-button>{{(state$ | async)?.auth?.email}}</button>
+            <button mat-button (click)="signOut()">Logout</button>
+        </ng-container>
     </span>
 </mat-toolbar>
 <router-outlet></router-outlet>

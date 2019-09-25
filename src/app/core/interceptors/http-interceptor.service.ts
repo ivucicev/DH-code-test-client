@@ -11,20 +11,21 @@ import {
     HttpInterceptor
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, switchMap, finalize, filter, take } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app.states';
+import { LogOut } from 'src/app/store/actions/auth.actions';
 
 @Injectable({
     providedIn: 'root'
 })
 export class HttpInterceptorService implements HttpInterceptor {
     constructor(
-        private router: Router,
         private snackBar: MatSnackBar,
-        private authService: AuthService
+        private store: Store<AppState>
     ) {}
 
     intercept(
@@ -66,8 +67,7 @@ export class HttpInterceptorService implements HttpInterceptor {
                 this.snackBar.open('Not authenticated...', 'Ok', {
                     duration: 2000
                 });
-                this.authService.toggleLoggedIn(false);
-                this.router.navigateByUrl('/auth/sign-in');
+                this.store.dispatch(new LogOut());
                 return throwError(err);
             case 400:
                 return throwError(err);

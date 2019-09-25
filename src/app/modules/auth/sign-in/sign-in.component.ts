@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { MatSnackBar } from '@angular/material';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.states';
 import { LogIn } from 'src/app/store/actions/auth.actions';

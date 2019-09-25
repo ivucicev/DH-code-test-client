@@ -2,26 +2,71 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.5.
 
-## Development server
+# How To start the server?
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Make sure your server is running on `http://localhost:3000`, 
 
-## Code scaffolding
+then
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```sh
+    $ npm install
+    $ ng s
+```
+should be enough,
 
-## Build
+if there is env difference, Ive added docker configuration so this app can run in its own container. It builds nodejs stuff then as a second step uses only nginx reverse proxy image where 
+runs static files so its ultra lightweight
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## login
 
-## Running unit tests
+Used forms are reactive forms, and validations for form inputs are over Validators function from reactive forms.
+Before you log in you should sign up cause there are no hardcoded or seeded users.
+after successfull login you should be redirected to encoding page
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## register
 
-## Running end-to-end tests
+Also im using reactive forms, validations are also from reactive forms, backend validations are from mongoose schema validator.
+If someone enables submit button, it still wont submit because I double check submission, but if someone posts from example postman
+validations are also there on server side, as always server side validations are must, on frontend they are nice to have...
+after success register you should be redirected to sign in 
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+## encoding
 
-## Further help
+Encoding is plain simple, it accepts everything but server validates only strings with alphabetic characters, returns encoding result as modal
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## logout
+
+dispatches logout action, sets initial state
+
+
+## Security
+
+Routing guards are set for route for `'encoder/encode'` you cant navigate to it unless you have valid session
+Also if you are already logged in logIn success action should be dispatched and you should be redirected to `'encoder/encode` route
+
+Http interceptor is used for making sure that api prefix is prepended to the called http route
+Http interceptor is also used to inject authorization header to the request
+Http interceptor is also making sure that withCredentials: true is used so angular app accepts CORS cookie...
+
+# What could be done better
+
+
+First I didnt see at the end of the email that ngRx is requirement, so I started without it and added it later for auth part of the application, 
+currently is used only for auth stuff for tracking state of auth components, 
+
+I could use NgRX on encoding part, and save history that way, and have the encoding results in state.
+
+Also loading should be as global spinner or something, and loading should be triggerd as state also with NgRx, but currently it is not that way.
+
+Same goes for the toaster messages, currently they are triggered for errors and success from effects, abut they could also be global and 
+show messages depending on the current state of error message or success message.
+
+UI Should be better thats for sure.
+
+Angular material is used for UI and it should be used a little bit different, I should create AngularMaterialShared module or something similar for reusing all material components, currently 
+all of its components are in sharedModule
+
+Routing guards should use state to determine if user is authenticated, currently they are using auth service for it...
+
+
+

@@ -7,8 +7,7 @@ export enum AuthActionTypes {
     SIGNUP = '[Auth] Signup',
     SIGNUP_SUCCESS = '[Auth] Signup Success',
     SIGNUP_FAILURE = '[Auth] Signup Failure',
-    LOGOUT = '[Auth] Logout',
-    GET_STATUS = 'GET_STATUS'
+    LOGOUT = '[Auth] Logout'
 }
 
 export class LogIn implements Action {

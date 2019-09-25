@@ -52,6 +52,7 @@ export class AuthEffects {
         ofType(AuthActionTypes.LOGIN_SUCCESS),
         tap(res => {
             sessionStorage.setItem('token', res.payload.token);
+            sessionStorage.setItem('email', res.payload.email);
             sessionStorage.setItem('expires', res.payload.expires);
             return this.router.navigateByUrl('/encoder/encode');
         })
@@ -103,8 +104,9 @@ export class AuthEffects {
     @Effect({ dispatch: false })
     public LogOut: Observable<any> = this.actions.pipe(
         ofType(AuthActionTypes.LOGOUT),
-        tap(user => {
+        tap(res => {
             sessionStorage.clear();
+            this.router.navigateByUrl('auth/sign-in');
         })
     );
 }

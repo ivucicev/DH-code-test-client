@@ -11,7 +11,6 @@ import { HttpInterceptorService } from './core/interceptors/http-interceptor.ser
 import { AuthGuard } from './core/guards/auth.guard';
 
 // @ngrx
-import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './store/effects/auth.effects';
