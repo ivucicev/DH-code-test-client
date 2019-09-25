@@ -74,6 +74,8 @@ Folder structure also could be bit better organized.
 Should use not master branch for development... 
 Could set TravisCI or CircleCI or Github actions for code deployment
 
+Should change angular app name, so creating component with scaffolding adds prefix to the names, but could think of good name for the app...
+
 Time taken for this project with interruptions was about 3h
 
 # Why do you have to deal with 2 repos one Frontend other Backend instead of one
@@ -81,6 +83,4 @@ Time taken for this project with interruptions was about 3h
 Cause its much easier to setup CI & Docker, and split work from front to end, seems to be bit more tidy
 
 If for this project purposes it should be other way, let me know so I can move it to the same repo
-
-
 
