@@ -69,7 +69,10 @@ Routing guards should use state to determine if user is authenticated, currently
 
 Maybe there is no need for modules lazy loading...
 
-Folder structure also could be bit better organized
+Folder structure also could be bit better organized.
+
+Should use not master branch for development... 
+Could set TravisCI or CircleCI or Github actions for code deployment
 
 Time taken for this project with interruptions was about 3h
 
