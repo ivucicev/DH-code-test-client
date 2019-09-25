@@ -1,6 +1,6 @@
 <div class="container">
     <mat-card class="card">
-        <mat-card-header>
+        <mat-card-header class="center">
             <mat-card-title>
                 Login
             </mat-card-title>
@@ -16,7 +16,7 @@
                             name="password" required>
                     </mat-form-field>
                 </div>
-                <mat-card-actions>
+                <mat-card-actions class="center">
                     <mat-spinner [diameter]="25" *ngIf="showSpinner">
                     </mat-spinner>
                     <button *ngIf="!showSpinner" mat-raised-button type="submit" color="primary"

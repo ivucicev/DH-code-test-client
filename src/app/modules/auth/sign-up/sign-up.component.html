@@ -1,6 +1,6 @@
 <div class="container">
     <mat-card class="card">
-        <mat-card-header>
+        <mat-card-header class="center">
             <mat-card-title>
                 Register
             </mat-card-title>
@@ -23,7 +23,7 @@
                             name="passwordRepeat" required>
                     </mat-form-field>
                 </div>
-                <mat-card-actions>
+                <mat-card-actions class="center">
                     <mat-spinner [diameter]="25" *ngIf="showSpinner">
                     </mat-spinner>
                     <button *ngIf="!showSpinner" mat-raised-button type="submit" color="primary"
