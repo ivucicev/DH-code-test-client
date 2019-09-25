@@ -53,7 +53,7 @@ Http interceptor is also making sure that withCredentials: true is used so angul
 First I didnt see at the end of the email that ngRx is requirement, so I started without it and added it later for auth part of the application, 
 currently is used only for auth stuff for tracking state of auth components, 
 
-I could use NgRX on encoding part, and save history that way, and have the encoding results in state.
+I could use NgRX on encoding part, and save history that way, and have the encoding results in state, but seemd that its enough for it to be stateless.
 
 Also loading should be as global spinner or something, and loading should be triggerd as state also with NgRx, but currently it is not that way.
 
@@ -73,9 +73,9 @@ Folder structure also could be bit better organized
 
 Time taken for this project with interruptions was about 3h
 
-# Why do you have to deal with 2 repos one Frontend other Backend
+# Why do you have to deal with 2 repos one Frontend other Backend instead of one
 
-Cause its much easier to setup CI & Docker, and split work from front to end
+Cause its much easier to setup CI & Docker, and split work from front to end, seems to be bit more tidy
 
 If for this project purposes it should be other way, let me know so I can move it to the same repo
 
