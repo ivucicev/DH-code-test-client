@@ -50,7 +50,6 @@ Http interceptor is also making sure that withCredentials: true is used so angul
 
 # What could be done better
 
-
 First I didnt see at the end of the email that ngRx is requirement, so I started without it and added it later for auth part of the application, 
 currently is used only for auth stuff for tracking state of auth components, 
 
@@ -67,6 +66,18 @@ Angular material is used for UI and it should be used a little bit different, I 
 all of its components are in sharedModule
 
 Routing guards should use state to determine if user is authenticated, currently they are using auth service for it...
+
+Maybe there is no need for modules lazy loading...
+
+Folder structure also could be bit better organized
+
+Time taken for this project with interruptions was about 3h
+
+# Why do you have to deal with 2 repos one Frontend other Backend
+
+Cause its much easier to setup CI & Docker, and split work from front to end
+
+If for this project purposes it should be other way, let me know so I can move it to the same repo
 
 
 
