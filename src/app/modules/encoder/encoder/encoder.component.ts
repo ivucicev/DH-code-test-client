@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EncodeService } from 'src/app/core/services/encode.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
+import { EncodedResultDialogComponent } from './encoded-result-dialog/encoded-result-dialog.component';
 
 @Component({
     selector: 'app-encoder',
@@ -12,7 +13,8 @@ export class EncoderComponent implements OnInit {
     public showSpinner = false;
     constructor(
         private encoderService: EncodeService,
-        private snackBar: MatSnackBar
+        private snackBar: MatSnackBar,
+        public dialog: MatDialog
     ) {}
 
     public async encode() {
@@ -20,11 +22,25 @@ export class EncoderComponent implements OnInit {
             return;
         }
         this.showSpinner = true;
-        const encoded = await this.encoderService
+        const encoded:
+            | any
+            | {
+                  success: boolean;
+                  encoded: string;
+              } = await this.encoderService
             .encode(this.sequence)
             .catch(err => this.showMessage(err.error.err));
-        console.log(encoded);
+        if (encoded && encoded.success) {
+            this.openDialog(encoded.encoded);
+        }
         this.showSpinner = false;
+    }
+
+    private openDialog(encoded: string): void {
+        const dialogRef = this.dialog.open(EncodedResultDialogComponent, {
+            width: '250px',
+            data: { encoded }
+        });
     }
 
     private showMessage(message) {
