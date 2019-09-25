@@ -6,12 +6,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from './shared/shared.module';
-import {
-    HttpClient,
-    HttpClientModule,
-    HTTP_INTERCEPTORS
-} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpInterceptorService } from './core/interceptors/http-interceptor.service';
+import { AuthGuard } from './core/guards/auth.guard';
 
 const appRoutes: Routes = [
     {
@@ -25,7 +22,9 @@ const appRoutes: Routes = [
     },
     {
         path: 'encoder',
-        loadChildren: './modules/encoder/encoder.module#EncoderModule'
+        loadChildren: './modules/encoder/encoder.module#EncoderModule',
+        canActivate: [AuthGuard],
+        canLoad: [AuthGuard]
     },
     {
         path: '**',

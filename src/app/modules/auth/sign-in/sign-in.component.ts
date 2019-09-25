@@ -34,6 +34,7 @@ export class SignInComponent implements OnInit {
         if (auth && auth.success) {
             this.authService.toggleLoggedIn(true);
             sessionStorage.setItem('token', auth.token);
+            sessionStorage.setItem('expires', auth.expires);
             this.router.navigateByUrl('encoder/encode');
             return;
         }

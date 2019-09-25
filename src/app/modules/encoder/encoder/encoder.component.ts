@@ -29,7 +29,7 @@ export class EncoderComponent implements OnInit {
                   encoded: string;
               } = await this.encoderService
             .encode(this.sequence)
-            .catch(err => this.showMessage(err.error.err));
+            .catch(err => this.showMessage(err.error.err || err.error));
         if (encoded && encoded.success) {
             this.openDialog(encoded.encoded);
         }
