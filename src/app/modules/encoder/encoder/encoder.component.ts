@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EncodeService } from 'src/app/core/services/encode.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'app-encoder',
@@ -8,10 +9,29 @@ import { EncodeService } from 'src/app/core/services/encode.service';
 })
 export class EncoderComponent implements OnInit {
     public sequence;
+    public showSpinner = false;
+    constructor(
+        private encoderService: EncodeService,
+        private snackBar: MatSnackBar
+    ) {}
 
-    constructor(private encoderService: EncodeService) {}
+    public async encode() {
+        if (!this.sequence) {
+            return;
+        }
+        this.showSpinner = true;
+        const encoded = await this.encoderService
+            .encode(this.sequence)
+            .catch(err => this.showMessage(err.error.err));
+        console.log(encoded);
+        this.showSpinner = false;
+    }
 
-    public encode() {}
+    private showMessage(message) {
+        this.snackBar.open(message, 'Ok', {
+            duration: 5000
+        });
+    }
 
     ngOnInit() {}
 }

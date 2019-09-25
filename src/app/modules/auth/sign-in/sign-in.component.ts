@@ -40,7 +40,7 @@ export class SignInComponent implements OnInit {
         this.showSpinner = false;
     }
 
-    public showMessage(message) {
+    private showMessage(message) {
         this.snackBar.open(message, 'Ok', {
             duration: 5000
         });
