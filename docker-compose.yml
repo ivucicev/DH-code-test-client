@@ -1,0 +1,10 @@
+version: '2.1'
+
+services:
+  dh-code-test-client:
+    image: dh-code-test-client
+    build: .
+    environment:
+      NODE_ENV: production
+    ports:
+      - 4200:4200
