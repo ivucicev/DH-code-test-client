@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './core/services/auth.service';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AppState } from './store/app.states';
+import { LogOut } from './store/actions/auth.actions';
 
 @Component({
     selector: 'app-root',
@@ -11,16 +14,16 @@ export class AppComponent implements OnInit {
     public title = 'DH-code-test-client';
     public isLoggedIn;
 
-    constructor(private authService: AuthService, private router: Router) {
+    constructor(
+        private authService: AuthService,
+        private router: Router,
+        private store: Store<AppState>
+    ) {
         this.checkSession();
     }
 
-    public async signOut() {
-        try {
-            await this.authService.signOut();
-            sessionStorage.clear();
-        } catch (err) {}
-        this.router.navigateByUrl('auth/sign-in');
+    public signOut() {
+        this.store.dispatch(new LogOut());
     }
 
     public checkSession() {

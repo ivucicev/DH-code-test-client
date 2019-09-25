@@ -10,6 +10,13 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpInterceptorService } from './core/interceptors/http-interceptor.service';
 import { AuthGuard } from './core/guards/auth.guard';
 
+// @ngrx
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './store/effects/auth.effects';
+import { reducers } from './store/app.states';
+
 const appRoutes: Routes = [
     {
         path: '',
@@ -40,7 +47,9 @@ const appRoutes: Routes = [
         AppRoutingModule,
         RouterModule.forRoot(appRoutes),
         SharedModule,
-        HttpClientModule
+        HttpClientModule,
+        StoreModule.forRoot(reducers, {}),
+        EffectsModule.forRoot([AuthEffects])
     ],
     providers: [
         {

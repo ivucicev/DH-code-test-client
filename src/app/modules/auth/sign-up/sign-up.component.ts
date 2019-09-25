@@ -3,6 +3,9 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app.states';
+import { SignUp } from 'src/app/store/actions/auth.actions';
 
 @Component({
     selector: 'app-sign-up',
@@ -15,12 +18,10 @@ export class SignUpComponent implements OnInit {
 
     constructor(
         private formBuilder: FormBuilder,
-        private authService: AuthService,
-        private snackBar: MatSnackBar,
-        private router: Router
+        private store: Store<AppState>
     ) {}
 
-    public async register() {
+    public register() {
         if (
             !this.registerForm.valid ||
             this.registerForm.value.password !==
@@ -29,22 +30,8 @@ export class SignUpComponent implements OnInit {
             return;
         }
         this.showSpinner = true;
-        const register: any = await this.authService
-            .signUp(this.registerForm.value)
-            .catch(err => {
-                this.showMessage(err.error.err);
-            });
-        if (register && register.success) {
-            this.router.navigateByUrl('auth/sign-in');
-            this.showMessage('Success! You can log in to your account.');
-        }
+        this.store.dispatch(new SignUp(this.registerForm.value));
         this.showSpinner = false;
-    }
-
-    private showMessage(message) {
-        this.snackBar.open(message, 'Ok', {
-            duration: 5000
-        });
     }
 
     ngOnInit() {

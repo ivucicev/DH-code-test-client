@@ -19,4 +19,6 @@ export class EncodedResultDialogComponent implements OnInit {
     close(): void {
         this.dialogRef.close();
     }
+
+    ngOnInit() {}
 }

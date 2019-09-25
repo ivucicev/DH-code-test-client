@@ -3,6 +3,9 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app.states';
+import { LogIn } from 'src/app/store/actions/auth.actions';
 
 @Component({
     selector: 'app-sign-in',
@@ -15,36 +18,16 @@ export class SignInComponent implements OnInit {
 
     constructor(
         private formBuilder: FormBuilder,
-        private authService: AuthService,
-        private snackBar: MatSnackBar,
-        private router: Router
+        private store: Store<AppState>
     ) {}
 
-    public async login() {
+    public login() {
         if (!this.loginForm.valid) {
             return;
         }
         this.showSpinner = true;
-
-        const auth: any = await this.authService
-            .signIn(this.loginForm.value)
-            .catch(err => {
-                this.showMessage(err.error.err);
-            });
-        if (auth && auth.success) {
-            this.authService.toggleLoggedIn(true);
-            sessionStorage.setItem('token', auth.token);
-            sessionStorage.setItem('expires', auth.expires);
-            this.router.navigateByUrl('encoder/encode');
-            return;
-        }
+        this.store.dispatch(new LogIn(this.loginForm.value));
         this.showSpinner = false;
-    }
-
-    private showMessage(message) {
-        this.snackBar.open(message, 'Ok', {
-            duration: 5000
-        });
     }
 
     ngOnInit() {

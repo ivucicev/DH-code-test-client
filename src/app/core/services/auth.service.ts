@@ -23,15 +23,15 @@ export class AuthService {
     }
 
     public signIn(data) {
-        return this.http.post('sign-in', data).toPromise();
+        return this.http.post('sign-in', data);
     }
 
     public signUp(data) {
-        return this.http.post('sign-up', data).toPromise();
+        return this.http.post('sign-up', data);
     }
 
     public signOut() {
         this.toggleLoggedIn(false);
-        return this.http.patch('sign-out', {}).toPromise();
+        return this.http.patch('sign-out', {});
     }
 }
